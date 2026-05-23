@@ -1,3 +1,8 @@
+---
+vault_canonical: 04_Career/BezaCore-Labs/products/bezacore-marketing/
+vault_mirrors: []
+---
+
 # CLAUDE.md — bezacore-marketing
 
 This is the `bezacore.com` parent marketing site. Scaffolded 2026-05-17 per hub ADR 0007 v1.2 as part of BezaCore Labs Master-Plan Chunk C Phase 1.
