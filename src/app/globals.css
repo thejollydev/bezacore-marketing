@@ -1,26 +1,629 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Tailwind v4 design tokens.
+  Anything declared here as --color-* / --font-* automatically generates
+  utility classes: --color-fire => bg-fire, text-fire, ring-fire, etc.
+*/
+@theme {
+  /* Beza palette ("Ember & Cobalt", locked 2026-05-09 in brand.md) */
+  --color-ink: #0a0e1f; /* primary dark surface */
+  --color-paper: #fafafa; /* primary text on ink */
+  --color-gold: #f59e0b; /* warm highlight */
+  --color-fire: #ea580c; /* warm mid / default warm accent */
+  --color-ember: #b91c1c; /* warm deep */
+  --color-cobalt: #1d4ed8; /* complementary signature */
+
+  /* True-black direction (2026-05-23): near-black page surface + neon-bright
+     accents. ink (#0a0e1f) is kept for slightly-lifted panels/cards. */
+  --color-base: #050609; /* near-black page surface */
+  --color-amber: #fbbf24; /* neon-bright warm highlight */
+  --color-azure: #3b82f6; /* electric cobalt highlight */
+
+  /* Type — Inter variable. The --font-inter var is injected by next/font. */
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Faint film grain (SVG fractal noise) — atmosphere on the ink surface. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* =====================================================================
+   HERO — "circuit-powered headline".
+   Traces converge behind the headline and fade out toward the edges, pulses
+   travel along them, junction nodes glow, and the headline carries the same
+   warm→cobalt flow — so the circuit reads as powering the words.
+   See products/bezacore-marketing/design/component-architecture.md.
+   ===================================================================== */
+
+/* Trace layer, masked to concentrate behind the headline (left-center). */
+.hero-circuit {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  -webkit-mask-image: radial-gradient(72% 82% at 28% 46%, #000 28%, transparent 80%);
+  mask-image: radial-gradient(72% 82% at 28% 46%, #000 28%, transparent 80%);
+}
+.hero-trace-base {
+  fill: none;
+  stroke: color-mix(in oklab, var(--color-cobalt) 22%, transparent);
+  stroke-width: 1;
+}
+.hero-trace-warm,
+.hero-trace-cool {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 36 600;
+}
+.hero-trace-warm {
+  stroke: var(--color-gold);
+}
+.hero-trace-cool {
+  stroke: var(--color-cobalt);
+}
+
+/* Glowing junction nodes. */
+.hero-node {
+  fill: var(--color-gold);
+}
+.hero-node-cool {
+  fill: var(--color-cobalt);
+}
+
+/* Soft warm+cobalt glow directly behind the headline. */
+.hero-circuit-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(22px);
+  background:
+    radial-gradient(
+      38% 50% at 26% 44%,
+      color-mix(in oklab, var(--color-gold) 26%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      40% 55% at 33% 52%,
+      color-mix(in oklab, var(--color-cobalt) 22%, transparent),
+      transparent 72%
+    );
+}
+
+/* Headline gradient — same palette + flow direction as the trace pulses. */
+.hero-headline-gradient {
+  background: linear-gradient(
+    100deg,
+    var(--color-gold),
+    var(--color-fire),
+    var(--color-cobalt),
+    var(--color-gold)
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* =====================================================================
+   Motion — gated behind prefers-reduced-motion: no-preference. Reduced-motion
+   users get the static composition (gradient still shows; nothing hidden).
+   ===================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-trace-warm {
+    animation: trace-flow 5s linear infinite;
+  }
+  .hero-trace-cool {
+    animation: trace-flow 7s linear infinite;
+  }
+  .hero-node {
+    animation: node-pulse 3s ease-in-out infinite;
+  }
+  .hero-headline-gradient {
+    animation: headline-flow 8s linear infinite;
+  }
+
+  /* Staggered page-load reveal for sub-body + CTAs. opacity:0 lives INSIDE
+     this query so reduced-motion users never get stuck on invisible content. */
+  .rise {
+    opacity: 0;
+    animation: rise 1.05s cubic-bezier(0.2, 0.65, 0.3, 1) forwards;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes trace-flow {
+  to {
+    stroke-dashoffset: -636;
+  }
+}
+@keyframes node-pulse {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes headline-flow {
+  to {
+    background-position: 300% 0;
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =====================================================================
+   Shared bold-treatment helpers (used across pages).
+   ===================================================================== */
+
+/* Scroll reveal — Reveal.tsx toggles .reveal-in when the element enters view. */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.65, 0.3, 1),
+    transform 0.7s cubic-bezier(0.2, 0.65, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal-in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Static warm→cobalt gradient text for emphasis phrases + headings. */
+.text-gradient {
+  background: linear-gradient(
+    100deg,
+    var(--color-gold),
+    var(--color-fire) 45%,
+    var(--color-cobalt)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Full-bleed bold gradient panel (fire→ember→violet→cobalt). The violet
+   bridges the warm/cool ends so the blend reads intentional, not muddy.
+   Pairs with paper text. */
+.bg-beza-gradient {
+  background: linear-gradient(
+    125deg,
+    #7c2d12 0%,
+    var(--color-ember) 28%,
+    #4c1d95 62%,
+    var(--color-cobalt) 100%
+  );
+}
+
+/* =====================================================================
+   Signature motion vocabulary (true-black + neon). Candidates for the site.
+   ===================================================================== */
+
+/* Traveling light — a glowing segment runs along a faint divider line. */
+.beam-divider {
+  position: relative;
+  height: 1px;
+  width: 100%;
+  overflow: hidden;
+  background: color-mix(in oklab, var(--color-paper) 9%, transparent);
+}
+.beam-divider::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -160px;
+  height: 1px;
+  width: 160px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-amber),
+    var(--color-azure),
+    transparent
+  );
+  box-shadow: 0 0 10px color-mix(in oklab, var(--color-fire) 70%, transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .beam-divider::after {
+    animation: beam-run 4.5s linear infinite;
+  }
+}
+@keyframes beam-run {
+  to {
+    left: 100%;
+  }
+}
+
+/* Self-drawing line/frame — stroke draws in when .drawn is added (DrawLine.tsx).
+   Uses pathLength=1 so a single dasharray works for any path length. */
+.draw-line path,
+.draw-line line,
+.draw-line rect {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.draw-line.drawn path,
+.draw-line.drawn line,
+.draw-line.drawn rect {
+  stroke-dashoffset: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .draw-line path,
+  .draw-line line,
+  .draw-line rect {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+}
+
+/* Cursor-reactive spotlight (SpotlightCard.tsx sets --mx/--my on move). */
+.spotlight {
+  position: relative;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 0%),
+    color-mix(in oklab, var(--color-azure) 22%, transparent),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.spotlight:hover::before {
+  opacity: 1;
+}
+
+/* Neon bloom for accent text. */
+.neon-warm {
+  color: var(--color-amber);
+  text-shadow: 0 0 18px color-mix(in oklab, var(--color-fire) 55%, transparent);
+}
+
+/* =====================================================================
+   LIVING CIRCUIT (prototype on /alive). A fixed weaving "board" behind the
+   page, with ambient traveling-light pulses, a cursor-tracked glow, a
+   scroll-progress pulse, and per-section neon "power-on".
+   ===================================================================== */
+
+.living-board {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.living-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.board-trace-base {
+  fill: none;
+  stroke: color-mix(in oklab, var(--color-cobalt) 14%, transparent);
+  stroke-width: 1;
+}
+.board-pulse-warm,
+.board-pulse-cool {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 60 1400;
+}
+.board-pulse-warm {
+  stroke: var(--color-amber);
+}
+.board-pulse-cool {
+  stroke: var(--color-azure);
+}
+.board-node {
+  fill: var(--color-amber);
+  opacity: 0.4;
+}
+.board-node-cool {
+  fill: var(--color-azure);
+}
+
+/* Cursor-tracked ambient glow (JS sets transform). Screen-blends over the
+   board so traces near the cursor brighten. */
+/* Cursor node — rides the traces toward the pointer (JS sets cx/cy), with a
+   fading glowing trail behind it. */
+.board-cursor-node {
+  fill: var(--color-amber);
+  filter: drop-shadow(0 0 5px var(--color-fire))
+    drop-shadow(0 0 11px var(--color-azure));
+}
+.board-cursor-trail {
+  fill: var(--color-fire);
+}
+
+/* Scroll-progress pulse (right edge). JS sets the dot's top. */
+.living-progress {
+  position: fixed;
+  top: 0;
+  right: 22px;
+  bottom: 0;
+  width: 1px;
+  background: color-mix(in oklab, var(--color-paper) 8%, transparent);
+}
+.living-progress-dot {
+  position: absolute;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -3px 0 0 -3px;
+  border-radius: 9999px;
+  background: var(--color-amber);
+  box-shadow: 0 0 10px var(--color-fire);
+}
+
+/* Per-section neon power-on (PowerOnSection.tsx adds .powered). */
+.power-head {
+  color: color-mix(in oklab, var(--color-paper) 30%, transparent);
+}
+.power-body {
+  opacity: 0.4;
+  transition: opacity 0.7s ease 0.15s;
+}
+.powered .power-body {
+  opacity: 1;
+}
+.powered .power-head {
+  background: linear-gradient(
+    100deg,
+    var(--color-amber),
+    var(--color-fire) 45%,
+    var(--color-azure)
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Optional power-on props: a row of service nodes (cascade) + a charge rail. */
+.power-services {
+  display: flex;
+  gap: 0.5rem;
+}
+.power-services span {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--color-azure);
+  opacity: 0.2;
+}
+.powered .power-services span {
+  opacity: 1;
+}
+.power-rail {
+  height: 2px;
+  width: 100%;
+  max-width: 12rem;
+  overflow: hidden;
+  background: color-mix(in oklab, var(--color-paper) 12%, transparent);
+}
+.power-rail i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--color-amber), var(--color-azure));
+}
+.powered .power-rail i {
+  transform: scaleX(1);
+  transition: transform 2.2s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Cold start — board wakes from black, hero spins up slowly. */
+  .living-board {
+    opacity: 0;
+    animation: wake-board 2.6s ease 0.2s forwards;
+  }
+  .boot-hero {
+    opacity: 0;
+    animation: wake-hero 3.2s ease 0.5s forwards;
+  }
+
+  .board-pulse-warm {
+    animation: board-flow 14s linear infinite;
+  }
+  .board-pulse-cool {
+    animation: board-flow 20s linear infinite;
+  }
+  .board-node {
+    animation: node-pulse 4.5s ease-in-out infinite;
+  }
+
+  /* Power-on — slow, substantial "spin up to full power", not a quick reveal. */
+  .powered.power--surge .power-head {
+    animation:
+      head-ignite 2.6s ease forwards,
+      headline-flow 8s linear infinite 2.6s;
+  }
+  .powered.power--cascade .power-head {
+    animation:
+      head-ignite 1.6s ease 2.2s both,
+      headline-flow 8s linear infinite 3.8s;
+  }
+  .powered.power--charge .power-head {
+    animation:
+      head-ignite 1.4s ease 2.2s both,
+      headline-flow 8s linear infinite 3.6s;
+  }
+  .powered.power--sweep .power-head {
+    animation:
+      head-sweep 2.4s ease forwards,
+      headline-flow 8s linear infinite 2.4s;
+  }
+  .powered.power--cascade .power-services span {
+    opacity: 0.2;
+    animation: dot-on 0.6s ease forwards;
+  }
+  .powered.power--cascade .power-services span:nth-child(1) {
+    animation-delay: 0.2s;
+  }
+  .powered.power--cascade .power-services span:nth-child(2) {
+    animation-delay: 0.6s;
+  }
+  .powered.power--cascade .power-services span:nth-child(3) {
+    animation-delay: 1s;
+  }
+  .powered.power--cascade .power-services span:nth-child(4) {
+    animation-delay: 1.4s;
+  }
+  .powered.power--cascade .power-services span:nth-child(5) {
+    animation-delay: 1.8s;
+  }
+}
+
+@keyframes board-flow {
+  to {
+    stroke-dashoffset: -1460;
+  }
+}
+@keyframes head-ignite {
+  from {
+    opacity: 0.2;
+    filter: brightness(0.5);
+  }
+  to {
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+@keyframes head-sweep {
+  0% {
+    opacity: 0.25;
+    background-position: 120% 0;
+  }
+  100% {
+    opacity: 1;
+    background-position: 0 0;
+  }
+}
+@keyframes dot-on {
+  to {
+    opacity: 1;
+    box-shadow: 0 0 8px var(--color-fire);
+  }
+}
+@keyframes wake-board {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes wake-hero {
+  from {
+    opacity: 0;
+    filter: brightness(0.3) saturate(0.4);
+  }
+  to {
+    opacity: 1;
+    filter: none;
+  }
+}
+
+/* Guiding-light prototype (/alive) — content illuminates out of black. */
+.gl-reveal {
+  opacity: 0;
+  filter: brightness(0.2);
+  transition: opacity 1.6s ease, filter 1.6s ease;
+}
+.gl-reveal.gl-on {
+  opacity: 1;
+  filter: drop-shadow(0 0 16px rgba(59, 130, 246, 0.45));
+}
+.gl-tagline {
+  font-size: 1.125rem;
+  letter-spacing: 0.01em;
+}
+.gl-tagline.gl-on {
+  filter: none;
+  background: linear-gradient(
+    100deg,
+    var(--color-amber),
+    var(--color-fire) 45%,
+    var(--color-azure)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gl-reveal {
+    opacity: 1;
+    filter: none;
+    transition: none;
+  }
+}
+
+/* Guided journey (/alive) — the firefly travels to each station and powers it.
+   State via classes (NOT scroll-opacity): dark -> lit (powered on arrival) ->
+   dim (energy moved on to the next node). */
+.j-station {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.j-station.lit {
+  opacity: 1;
+}
+.j-station.lit.dim {
+  opacity: 0;
+}
+.j-station.lit .j-wordmark {
+  filter: drop-shadow(0 0 18px rgba(59, 130, 246, 0.5));
+  transition: filter 0.9s ease;
+}
+.j-station.lit .j-head {
+  background: linear-gradient(
+    100deg,
+    var(--color-amber),
+    var(--color-fire) 45%,
+    var(--color-azure)
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .j-station.lit .j-head {
+    animation: headline-flow 8s linear infinite;
+  }
 }
