@@ -4,7 +4,7 @@ import { type ReactNode } from "react";
 // "Contact", etc.). Uses the warm spine (fire) as its accent.
 export function Kicker({ children }: { children: ReactNode }) {
   return (
-    <span className="text-xs font-medium uppercase tracking-[0.2em] text-fire">
+    <span className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-fire">
       {children}
     </span>
   );

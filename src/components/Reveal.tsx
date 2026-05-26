@@ -20,10 +20,9 @@ export function Reveal({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setShown(true);
-      return;
-    }
+    // Reduced-motion (and no-JS) users get the content shown immediately via
+    // the CSS fallback in globals.css (`.reveal` forced visible under
+    // prefers-reduced-motion), so no JS branch is needed here.
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {

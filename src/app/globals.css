@@ -23,6 +23,9 @@
   /* Type — Inter variable. The --font-inter var is injected by next/font. */
   --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto,
     sans-serif;
+  /* Mono accent (nav) — IBM Plex Mono via next/font (--font-plex-mono). */
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo,
+    monospace;
 }
 
 /* Faint film grain (SVG fractal noise) — atmosphere on the ink surface. */
@@ -593,24 +596,64 @@
   }
 }
 
-/* Guided journey (/alive) — the firefly travels to each station and powers it.
-   State via classes (NOT scroll-opacity): dark -> lit (powered on arrival) ->
-   dim (energy moved on to the next node). */
-.j-station {
-  opacity: 0;
-  transition: opacity 0.8s ease;
+/* Guided journey (/alive) — the firefly flies between towers; each ENERGIZES
+   out of black IN ITS OWN WAY when the energy arrives (.is-lit), then goes
+   fully dark as the energy flies on. State is class-driven (NOT per-frame
+   scroll-opacity). --j-accent is set by LightJourney from the ?c= palette so
+   the glows match the traveling light. Variants: v-surge / v-services /
+   v-charge / v-scan (experience-vision §5 power-up vocabulary). */
+/* The circuit board (SVG) — orthogonal traces, ambient branch pulses, and the
+   bright "current" that flows along the main trace (stroke-dashoffset, set by
+   LightJourney from scroll). Continuous with the homepage fusion circuit. */
+.j-board {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
-.j-station.lit {
+.j-trace-base {
+  fill: none;
+  stroke: color-mix(in oklab, var(--color-cobalt) 20%, transparent);
+  stroke-width: 1;
+}
+.j-pulse {
+  fill: none;
+  stroke: rgb(var(--j-accent, 59, 130, 246));
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px rgb(var(--j-accent, 59, 130, 246)))
+    drop-shadow(0 0 16px rgb(var(--j-accent, 59, 130, 246)));
+}
+.j-decor {
+  fill: none;
+  stroke: rgb(var(--j-accent, 59, 130, 246));
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 28 560;
+  opacity: 0.45;
+}
+.j-node {
+  fill: rgb(var(--j-accent, 59, 130, 246));
+  opacity: 0.35;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .j-decor {
+    animation: trace-flow 9s linear infinite;
+  }
+  .j-node {
+    animation: node-pulse 4s ease-in-out infinite;
+  }
+}
+
+.j-tower {
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.j-tower.is-lit {
   opacity: 1;
 }
-.j-station.lit.dim {
-  opacity: 0;
-}
-.j-station.lit .j-wordmark {
-  filter: drop-shadow(0 0 18px rgba(59, 130, 246, 0.5));
-  transition: filter 0.9s ease;
-}
-.j-station.lit .j-head {
+.j-head {
   background: linear-gradient(
     100deg,
     var(--color-amber),
@@ -622,8 +665,182 @@
   background-clip: text;
   color: transparent;
 }
+
+/* shared ignite keyframe — an over-bright SPIKE then settle (reads as power-on,
+   not a fade); and a wordmark glow that swells in. */
+@keyframes j-ignite {
+  0% {
+    opacity: 0;
+    filter: brightness(0.25);
+  }
+  45% {
+    opacity: 1;
+    filter: brightness(1.85);
+  }
+  70% {
+    filter: brightness(0.95);
+  }
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+.j-tower .j-wordmark {
+  filter: drop-shadow(0 0 18px rgba(var(--j-accent, 59, 130, 246), 0));
+  transition: filter 1s ease;
+}
+.j-tower.is-lit .j-wordmark {
+  filter: drop-shadow(0 0 26px rgba(var(--j-accent, 59, 130, 246), 0.6));
+}
+
+/* node 1 "starting services" dots */
+.j-dots {
+  display: flex;
+  gap: 0.55rem;
+  margin-bottom: 1.1rem;
+}
+.j-dots span {
+  width: 9px;
+  height: 9px;
+  border-radius: 9999px;
+  background: rgb(var(--j-accent, 59, 130, 246));
+  opacity: 0.12;
+}
+
+/* node 2 "charging" rail */
+.j-rail {
+  height: 2px;
+  width: 100%;
+  max-width: 14rem;
+  overflow: hidden;
+  background: color-mix(in oklab, var(--color-paper) 12%, transparent);
+}
+.j-rail i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, rgb(var(--j-accent, 59, 130, 246)), var(--color-amber));
+}
+
+/* node 3 "scan" — a sweep band over the (initially dim) link */
+.j-scan {
+  position: relative;
+  display: inline-block;
+}
+.j-link {
+  color: var(--color-paper);
+  opacity: 0.12;
+}
+.j-scan::after {
+  content: "";
+  position: absolute;
+  inset: -0.4rem -0.6rem;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--j-accent, 59, 130, 246), 0.55),
+    transparent
+  );
+  transform: translateX(-130%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* body text that powers up after its instrument finishes */
+.j-tower .j-body {
+  opacity: 0.12;
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .j-station.lit .j-head {
-    animation: headline-flow 8s linear infinite;
+  /* node 0 — SURGE: the whole block swells up from black */
+  .j-tower.v-surge.is-lit {
+    animation: j-ignite 1.7s ease-out;
+  }
+
+  /* node 1 — SERVICES: dots light one-by-one, THEN the heading ignites */
+  .j-tower.v-services.is-lit .j-dots span {
+    animation: j-dot-on 0.5s ease forwards;
+  }
+  .j-tower.v-services.is-lit .j-dots span:nth-child(1) {
+    animation-delay: 0.15s;
+  }
+  .j-tower.v-services.is-lit .j-dots span:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+  .j-tower.v-services.is-lit .j-dots span:nth-child(3) {
+    animation-delay: 0.85s;
+  }
+  .j-tower.v-services.is-lit .j-head {
+    animation:
+      j-ignite 1s ease 1.1s both,
+      headline-flow 8s linear infinite 2.1s;
+  }
+  .j-tower.v-services.is-lit .j-body {
+    animation: j-body-on 0.8s ease 1.5s both;
+  }
+
+  /* node 2 — CHARGE: the rail fills like a capacitor, then the body powers */
+  .j-tower.v-charge.is-lit .j-rail i {
+    transform: scaleX(1);
+    transition: transform 1.3s cubic-bezier(0.3, 0.7, 0.3, 1);
+  }
+  .j-tower.v-charge.is-lit .j-body {
+    animation: j-body-on 0.9s ease 1.2s both;
+  }
+
+  /* node 3 — SCAN: a band sweeps across, bringing the link fully online */
+  .j-tower.v-scan.is-lit .j-scan::after {
+    animation: j-scan-sweep 1.3s ease forwards;
+  }
+  .j-tower.v-scan.is-lit .j-link {
+    animation: j-body-on 0.7s ease 0.5s both;
+  }
+}
+
+@keyframes j-dot-on {
+  to {
+    opacity: 1;
+    box-shadow: 0 0 9px rgb(var(--j-accent, 59, 130, 246));
+  }
+}
+@keyframes j-body-on {
+  from {
+    opacity: 0.12;
+    filter: brightness(0.5);
+  }
+  to {
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+@keyframes j-scan-sweep {
+  0% {
+    transform: translateX(-130%);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(130%);
+    opacity: 0;
+  }
+}
+
+/* reduced motion — everything shown, lit, static; nothing hidden */
+@media (prefers-reduced-motion: reduce) {
+  .j-tower {
+    opacity: 1;
+  }
+  .j-tower .j-body,
+  .j-tower .j-link,
+  .j-dots span {
+    opacity: 1;
+  }
+  .j-rail i {
+    transform: scaleX(1);
   }
 }
