@@ -98,12 +98,12 @@ Open in this order when working on this repo:
 
 Production assets live at `~/Projects/bezacore-labs/brand-assets/bezacore-labs/exports/` (86 files: mark suite + wordmark + horizontal/stacked lockups × dark + light surfaces × 5 widths).
 
-For embedding in this repo, copy needed exports to `public/brand/` and reference from there. Do not symlink — the static export build needs files inline.
+For embedding in this repo, copy needed exports to `public/brand/` and reference from there. Do not symlink — the standalone server build copies `public/` inline.
 
 ## Phase status
 
-- **Phase 1 — scaffold + content + build:** scaffold ✅ (2026-05-17), content lock ✅ (2026-05-21), **v1 build ✅ (2026-05-25)** — all 4 pages built, contact + waitlist forms wired to Resend API routes, `pnpm build` green. **Living-light experience descoped** (parked in vault). Remaining before deploy: Resend env/domain setup (`RESEND_API_KEY` + verified sender), copy full brand-asset set into `public/brand/`, optional `/about` polish.
-- **Phase 2 — deploy + DNS:** deferred. GCP project + Cloud Run + Cloudflare DNS happen when Phase 1 ships and content is ready to publish
+- **Phase 1 — scaffold + content + build: ✅ COMPLETE.** scaffold ✅ (2026-05-17), content lock ✅ (2026-05-21), **v1 build + merged ✅ (PR #3, 2026-05-25)** — all 4 pages, contact + waitlist forms → Resend API routes, site-wide signature styling. **Living-light experience descoped** (parked in vault). **Chunk-C local pass ✅ (2026-05-31):** real `/terms` + `/privacy`, brand/OG metadata in `public/brand/`, Dockerized for Cloud Run (`output: 'standalone'`, smoke-tested). `pnpm build` green.
+- **Phase 2 — deploy + DNS:** 🔄 next, the go-live push (needs accounts/DNS). Tracked in Plane `MKTG`: Resend account + `bezacore.com` domain verify (MKTG-21, gates the forms) → GCP project + Artifact Registry (MKTG-15) → Cloud Run deploy + Cloudflare DNS (MKTG-17) → end-to-end test (MKTG-18) = Chunk C exit.
 
 ## Working style
 
