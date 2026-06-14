@@ -9,7 +9,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is the `bezacore.com` parent marketing site. Scaffolded 2026-05-17 per hub ADR 0007 v1.2 as part of BezaCore Labs Master-Plan Chunk C Phase 1.
 
-> **Vault is canonical for all BezaCore Labs documentation.** The product home for this repo lives at `~/GoogleDrive/Obsidian/Master-Mind/04_Career/BezaCore-Labs/products/bezacore-marketing/`. Strategy, ROADMAP, content spec, and design decisions live there. This repo holds code + CLAUDE.md + README.md.
+> **Vault is canonical for all BezaCore Labs documentation.** The product home for this repo lives at `~/Vaults/Master-Mind/04_Career/BezaCore-Labs/products/bezacore-marketing/` (vault moved out of GoogleDrive 2026-06-06 per hub ADR 0002). Strategy, ROADMAP, content spec, and design decisions live there. This repo holds code + CLAUDE.md + README.md.
 
 ## What this repo IS
 
@@ -103,7 +103,7 @@ For embedding in this repo, copy needed exports to `public/brand/` and reference
 ## Phase status
 
 - **Phase 1 — scaffold + content + build: ✅ COMPLETE.** scaffold ✅ (2026-05-17), content lock ✅ (2026-05-21), **v1 build + merged ✅ (PR #3, 2026-05-25)** — all 4 pages, contact + waitlist forms → Resend API routes, site-wide signature styling. **Living-light experience descoped** (parked in vault). **Chunk-C local pass ✅ (2026-05-31):** real `/terms` + `/privacy`, brand/OG metadata in `public/brand/`, Dockerized for Cloud Run (`output: 'standalone'`, smoke-tested). `pnpm build` green.
-- **Phase 2 — deploy + DNS:** 🔄 next, the go-live push (needs accounts/DNS). Tracked in Plane `MKTG`: Resend account + `bezacore.com` domain verify (MKTG-21, gates the forms) → GCP project + Artifact Registry (MKTG-15) → Cloud Run deploy + Cloudflare DNS (MKTG-17) → end-to-end test (MKTG-18) = Chunk C exit.
+- **Phase 2 — deploy + DNS:** 🔄 next, the go-live push (needs accounts/DNS). Tracked in Plane `MKTG`: Resend account + `bezacore.com` domain verify (MKTG-21, gates the forms) → GCP project + Artifact Registry (MKTG-15) → Cloud Run deploy + Google Cloud DNS (MKTG-17) → end-to-end test (MKTG-18) = Chunk C exit.
 
 ## Working style
 
