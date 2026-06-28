@@ -22,7 +22,7 @@ const pillars = [
   },
   {
     title: "DevOps & Cloud Infrastructure",
-    body: "The “run” half: CI/CD pipelines, containerization, cloud deployment (Cloud Run / GCP), hosting, and observability so problems surface before your users find them. Engagements range from a one-time deploy to a standing infrastructure setup. For teams who have an app but no one who owns getting it live and keeping it healthy.",
+    body: "The “run” half: CI/CD pipelines, containerization, and deployment across the full Google Cloud Platform — Compute Engine, GKE, Cloud Run, Cloud Functions, Cloud SQL, BigQuery, networking, and IAM, whatever the workload needs — plus hosting and observability so problems surface before your users find them. Engagements range from a one-time deploy to a standing infrastructure setup. For teams who have an app but no one who owns getting it live and keeping it healthy.",
   },
   {
     title: "AI & Agent Development",
@@ -48,7 +48,7 @@ const packages = [
   },
   {
     name: "Deploy-to-Cloud",
-    gets: "Your app live on Cloud Run / GCP with monitoring and a runbook.",
+    gets: "Your app live on Google Cloud — the right GCP services for the job (Cloud Run, GKE, Compute Engine, Cloud SQL…) — with monitoring and a runbook.",
     price: "from $2,000",
   },
   {
@@ -86,7 +86,7 @@ const technologies = [
   },
   {
     group: "Cloud & infrastructure",
-    items: "Google Cloud · Cloud Run · Docker · Terraform · Ansible · Proxmox · Linux",
+    items: "Google Cloud (Compute Engine, GKE, Cloud Run, Cloud Functions, Cloud SQL, BigQuery) · Docker · Terraform · Ansible · Proxmox · Linux",
   },
   {
     group: "AI & agents",
