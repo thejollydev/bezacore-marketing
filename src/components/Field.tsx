@@ -11,6 +11,7 @@ export function Field({
   textarea = false,
   error,
   autoComplete,
+  placeholder,
   rows = 5,
 }: {
   label: string;
@@ -21,6 +22,7 @@ export function Field({
   textarea?: boolean;
   error?: string;
   autoComplete?: string;
+  placeholder?: string;
   rows?: number;
 }) {
   const control =
@@ -39,6 +41,7 @@ export function Field({
           value={value}
           onChange={onChange}
           rows={rows}
+          placeholder={placeholder}
           aria-invalid={error ? true : undefined}
           className={`${control} ${borderColor} resize-y`}
         />
@@ -50,6 +53,7 @@ export function Field({
           value={value}
           onChange={onChange}
           autoComplete={autoComplete}
+          placeholder={placeholder}
           aria-invalid={error ? true : undefined}
           className={`${control} ${borderColor}`}
         />

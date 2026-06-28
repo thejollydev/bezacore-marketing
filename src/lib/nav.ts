@@ -5,7 +5,8 @@
 // both the Header and Footer update.
 export const navLinks = [
   { href: "/", label: "Home" },
+  { href: "/services", label: "Services" },
+  { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
-  { href: "/intelligrace", label: "Intelligrace" },
   { href: "/contact", label: "Contact" },
 ];

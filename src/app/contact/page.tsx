@@ -1,29 +1,24 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Section } from "@/components/Section";
 import { PageHero } from "@/components/PageHero";
 import { ContactForm } from "@/components/ContactForm";
 
-// /contact — copy verbatim from content/v1-locked.md. Form-only (no visible
-// email anywhere, including error states) per the locked policy.
+// /contact — copy verbatim from content/v2-studio.md (locked 2026-06-27). The
+// project-inquiry path (the waitlist is retired from the public surface).
+// Form-only (no visible email anywhere, including error states) per the locked
+// policy. Brand voice ("us/we").
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with BezaCore Labs.",
+  description: "Start a project with BezaCore Labs.",
 };
 
 export default function Contact() {
   return (
     <main className="flex flex-1 flex-col">
-      <PageHero kicker="Contact" title="Get in touch">
-        For partnership inquiries, press, donor questions, or general questions about BezaCore Labs. If
-        you&apos;re interested in Intelligrace specifically, the{" "}
-        <Link
-          href="/intelligrace"
-          className="font-medium text-paper underline decoration-cobalt/50 underline-offset-4 transition-colors hover:decoration-cobalt"
-        >
-          waitlist
-        </Link>{" "}
-        is the better starting point.
+      <PageHero kicker="Contact" title="Start a project">
+        Tell us what you&apos;re trying to build or fix. We&apos;ll point you to
+        the package that fits and roughly what it costs — usually within a day.
+        For anything bigger or fuzzier, a short call sorts it out.
       </PageHero>
 
       <Section>

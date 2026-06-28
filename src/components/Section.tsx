@@ -2,7 +2,7 @@ import { type ReactNode } from "react";
 import { Container } from "./Container";
 
 // Vertical-rhythm wrapper for page sections. `id` enables anchor links
-// (e.g. /about#why-this-exists). Spacing lives here so every section is
+// (e.g. /page#section-name). Spacing lives here so every section is
 // consistent and tunable in one place.
 export function Section({
   id,

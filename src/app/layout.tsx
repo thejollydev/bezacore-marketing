@@ -28,18 +28,18 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://bezacore.com"),
   title: {
-    default: "BezaCore Labs — Software for the work that matters.",
+    default: "BezaCore Labs — Software, AI, and the infrastructure to run it.",
     template: "%s — BezaCore Labs",
   },
   description:
-    "BezaCore Labs is a Michigan software company building tools for small mission-driven organizations — starting with Intelligrace, a platform for small churches and Christian nonprofits.",
+    "BezaCore Labs is a DevOps and AI studio in Michigan that builds and runs cloud-native software — apps, AI features and agents, and the cloud infrastructure and automation behind them.",
   openGraph: {
     type: "website",
     siteName: "BezaCore Labs",
     url: "https://bezacore.com",
-    title: "BezaCore Labs — Software for the work that matters.",
+    title: "BezaCore Labs — Software, AI, and the infrastructure to run it.",
     description:
-      "A Michigan software company building tools for small mission-driven organizations.",
+      "A DevOps and AI studio that builds and runs cloud-native software — apps, AI and AI agents, and the infrastructure behind them.",
   },
 };
 
