@@ -55,7 +55,7 @@ export function ContactForm() {
   if (status === "success") {
     return (
       <p className="text-xl font-medium text-paper" role="status">
-        Thanks. We&apos;ll be in touch.
+        Thanks — we&apos;ll be in touch.
       </p>
     );
   }
@@ -79,7 +79,15 @@ export function ContactForm() {
         autoComplete="email"
       />
       <Field label="Subject" name="subject" value={fields.subject} onChange={update("subject")} error={errors.subject} />
-      <Field label="Message" name="message" textarea value={fields.message} onChange={update("message")} error={errors.message} />
+      <Field
+        label="Message"
+        name="message"
+        textarea
+        value={fields.message}
+        onChange={update("message")}
+        error={errors.message}
+        placeholder="What are you trying to build, and any timeline or budget you have in mind?"
+      />
 
       {/* honeypot — hidden from humans, off the tab order */}
       <input

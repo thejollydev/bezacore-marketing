@@ -23,9 +23,6 @@ export default function Privacy() {
         <li>
           <strong>Contact form</strong> — your name, email address, subject, and message.
         </li>
-        <li>
-          <strong>Intelligrace waitlist</strong> — your email address.
-        </li>
       </ul>
       <p>
         Nothing is collected automatically. There are no cookies, no analytics, no tracking pixels,
@@ -34,8 +31,7 @@ export default function Privacy() {
 
       <h2>How we use it</h2>
       <p>
-        We use contact-form submissions to read and respond to your message. We use waitlist emails
-        only to tell you about Intelligrace, as described on the waitlist form. We will not email you
+        We use contact-form submissions to read and respond to your message. We will not email you
         for any other reason, and we will not share or sell your address.
       </p>
 
@@ -55,9 +51,8 @@ export default function Privacy() {
 
       <h2>Your choices</h2>
       <p>
-        You can ask us to access or delete the information you have given us, or to remove you from
-        the Intelligrace waitlist, at any time — reach us through the{" "}
-        <Link href="/contact">contact form</Link>. If you are a California resident, you have the
+        You can ask us to access or delete the information you have given us at any time — reach us
+        through the <Link href="/contact">contact form</Link>. If you are a California resident, you have the
         right to know what personal information we hold and to request its deletion; this policy
         describes the full extent of what we collect.
       </p>

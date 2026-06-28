@@ -36,7 +36,7 @@ export function Footer() {
             className="h-auto w-52 [filter:drop-shadow(0_0_36px_rgba(96,165,250,0.28))]"
           />
           <p className="hero-headline-gradient max-w-xs text-xl font-semibold tracking-tight">
-            Software for the work that matters.
+            Software, AI, and the infrastructure to run it.
           </p>
           <p className="text-sm text-paper/45">Petoskey, Michigan · Est. 2025</p>
         </div>
@@ -58,15 +58,9 @@ export function Footer() {
           <Link href="/privacy" className={linkClass}>
             Privacy
           </Link>
-          {/* External link → plain <a> (next/link is for in-app routes only). */}
-          <a
-            href="https://github.com/BezaCore-Labs"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={linkClass}
-          >
-            GitHub ↗
-          </a>
+          {/* GitHub link removed 2026-06-27 — the BezaCore-Labs org has no
+              public repos yet (a barren link is worse than none). Re-add when
+              there's something public. See content/v2-studio.md. */}
         </div>
       </Container>
 
