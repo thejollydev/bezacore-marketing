@@ -65,8 +65,19 @@ export function Footer() {
       </Container>
 
       <div className="relative z-10 border-t border-paper/5">
-        <Container className="py-6">
+        <Container className="flex flex-col gap-2 py-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-paper/40">© 2026 BezaCore Labs LLC. All rights reserved.</p>
+          {/* Stripe Climate — 0.5% of revenue to carbon removal (opted in
+              2026-06-28). A quiet values signal; fits the softened-values
+              positioning. */}
+          <a
+            href="https://climate.stripe.com/A7UnvM"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-paper/40 transition-colors hover:text-paper"
+          >
+            We contribute 0.5% of revenue to carbon removal via Stripe Climate
+          </a>
         </Container>
       </div>
     </footer>

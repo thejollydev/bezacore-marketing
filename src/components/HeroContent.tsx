@@ -16,12 +16,23 @@ export function HeroContent({
 } = {}) {
   return (
     <Container className="relative z-10 flex flex-col items-start gap-8 py-28 sm:py-36">
-      <h1
-        className={`${animateHeadline ? "rise " : ""}max-w-3xl text-5xl font-semibold leading-[1.05] tracking-tight text-paper sm:text-6xl lg:text-7xl ${headlineClassName}`}
-        style={animateHeadline ? { animationDelay: "150ms" } : undefined}
-      >
-        Software, AI, and the infrastructure to run it.
-      </h1>
+      {/* Brand rallying line (slogan, locked 2026-06-28) — sits above the
+          descriptive tagline H1 as a Plex Mono eyebrow. Distinct from the
+          tagline: rally first, capability statement second. */}
+      <div className="flex flex-col gap-4">
+        <p
+          className="rise font-mono text-xs font-semibold uppercase tracking-[0.28em] text-fire"
+          style={{ animationDelay: "0ms" }}
+        >
+          Build Better. Build Beyond.
+        </p>
+        <h1
+          className={`${animateHeadline ? "rise " : ""}max-w-3xl text-5xl font-semibold leading-[1.05] tracking-tight text-paper sm:text-6xl lg:text-7xl ${headlineClassName}`}
+          style={animateHeadline ? { animationDelay: "150ms" } : undefined}
+        >
+          Software, AI, and the infrastructure to run it.
+        </h1>
+      </div>
       <p
         className="rise max-w-xl text-lg leading-relaxed text-paper/70"
         style={{ animationDelay: "480ms" }}
