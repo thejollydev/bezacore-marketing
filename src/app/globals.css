@@ -175,6 +175,42 @@
 }
 
 /* =====================================================================
+   Mobile menu — panel slide-in + staggered link reveal. Reuses the site's
+   easing + motion vocabulary; gated behind prefers-reduced-motion (the
+   opacity:0 lives INSIDE the query so reduced-motion users never get stuck on
+   invisible links — same pattern as .rise / .reveal).
+   ===================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  .menu-panel {
+    animation: menu-in 0.3s cubic-bezier(0.2, 0.65, 0.3, 1);
+  }
+  .menu-item {
+    opacity: 0;
+    animation: menu-item-in 0.45s cubic-bezier(0.2, 0.65, 0.3, 1) forwards;
+  }
+}
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes menu-item-in {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =====================================================================
    Shared bold-treatment helpers (used across pages).
    ===================================================================== */
 

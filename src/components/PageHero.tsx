@@ -22,7 +22,7 @@ export function PageHero({
       <Container className="relative z-10 py-24 sm:py-28">
         {kicker ? <Kicker>{kicker}</Kicker> : null}
         <h1
-          className={`${kicker ? "mt-4 " : ""}hero-headline-gradient max-w-3xl text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl`}
+          className={`${kicker ? "mt-4 " : ""}hero-headline-gradient max-w-3xl [overflow-wrap:anywhere] text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl`}
         >
           {title}
         </h1>
