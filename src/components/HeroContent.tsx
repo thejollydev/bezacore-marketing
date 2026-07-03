@@ -27,7 +27,7 @@ export function HeroContent({
           Build Better. Build Beyond.
         </p>
         <h1
-          className={`${animateHeadline ? "rise " : ""}max-w-3xl text-5xl font-semibold leading-[1.05] tracking-tight text-paper sm:text-6xl lg:text-7xl ${headlineClassName}`}
+          className={`${animateHeadline ? "rise " : ""}max-w-3xl [overflow-wrap:anywhere] text-5xl font-semibold leading-[1.05] tracking-tight text-paper sm:text-6xl lg:text-7xl ${headlineClassName}`}
           style={animateHeadline ? { animationDelay: "150ms" } : undefined}
         >
           Software, AI, and the infrastructure to run it.
