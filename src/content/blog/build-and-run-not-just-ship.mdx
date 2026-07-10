@@ -1,0 +1,23 @@
+Most software relationships end at the handoff. The repo gets transferred, the invoice gets paid, and everyone moves on — until something breaks in production and it’s suddenly unclear whose problem it is.
+
+I build the other way. Deploying the thing and keeping it running are part of the job, not a separate contract you go shopping for later.
+
+## The handoff is where projects quietly fail
+
+A working app on a developer’s laptop is not the same as an app that stays up under real traffic, recovers from a bad deploy, and tells you something’s wrong before your users do. That gap — between “it works” and “it keeps working” — is where a lot of small teams get stranded. They hired someone to build it, and now they need someone else to run it, and the two don’t quite talk to each other.
+
+## One studio, the whole lifecycle
+
+At BezaCore Labs the same person who builds it also containerizes it, sets up the pipeline, deploys it to Google Cloud, and wires up monitoring. Not because it’s fancy — because the person who wrote the code is the one best placed to keep it healthy, and because I’ve spent years on the operational side cleaning up systems nobody planned to run.
+
+In practice that means:
+
+- **Infrastructure as code**, so the setup is reproducible instead of a pile of manual clicks nobody remembers.
+- **Monitoring and alerts**, so problems surface on my screen, not in your support inbox.
+- **Backups you can actually restore**, and a written recovery path — tested, not assumed.
+
+## Why it matters to you
+
+You get one accountable owner from the first commit to live traffic. When something needs attention, there’s no finger-pointing between “the dev” and “the ops person” — it’s the same studio, and it’s already watching.
+
+Shipping is the easy part. Running it is the job.

@@ -51,6 +51,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${plexMono.variable} h-full`}>
       <body className="flex min-h-full flex-col bg-base font-sans text-paper antialiased">
+        {/* Blueprint grid texture behind everything (fixed, z-index:-1). */}
+        <div aria-hidden="true" className="bz-gridfield" />
         <Header />
         {children}
         <Footer />

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Container } from "./Container";
 import { navLinks } from "@/lib/nav";
+import { btnPrimarySm } from "@/lib/ui";
 
 // "use client" for usePathname (active-link state) + the mobile-menu toggle.
 // Sticky + translucent blur so the circuit/content scrolls under it; the
@@ -70,6 +71,9 @@ export function Header() {
               </Link>
             );
           })}
+          <Link href="/contact" className={`${btnPrimarySm} ml-1`}>
+            Start a project
+          </Link>
         </nav>
 
         {/* Mobile menu toggle — hamburger below `sm`. */}
@@ -155,6 +159,13 @@ export function Header() {
                 </Link>
               );
             })}
+            <Link
+              href="/contact"
+              onClick={() => setOpen(false)}
+              className={`${btnPrimarySm} mt-3 justify-center py-3`}
+            >
+              Start a project
+            </Link>
           </Container>
         </nav>
       ) : null}

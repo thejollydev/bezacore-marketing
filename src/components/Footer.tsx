@@ -3,46 +3,52 @@ import Link from "next/link";
 import { Container } from "./Container";
 import { navLinks } from "@/lib/nav";
 
-const linkClass = "text-sm text-paper/60 transition-colors hover:text-paper";
+// Footer (v3 redesign, 2026-07) — clean structured columns with brand color:
+// a cobalt gradient seam, warm+cool ambient glows, amber column labels, and a
+// gradient accent on the brand line. Stacks to one column on mobile.
+const linkClass = "text-sm text-paper/55 transition-colors hover:text-paper";
+const headClass = "font-mono text-xs font-semibold uppercase tracking-[0.2em] text-amber";
 
 export function Footer() {
   return (
-    // mt-auto pins the footer to the bottom on short pages (body is a min-h
-    // flex column). overflow-hidden clips the mark watermark.
-    <footer className="grain relative z-10 mt-auto overflow-hidden">
-      {/* animated light edge — the hero's traveling-pulse language, as a seam */}
-      <div className="beam-divider" />
-      {/* same left-concentrated glow as the hero, so the brand sits in light */}
-      <div className="hero-circuit-glow" aria-hidden="true" />
-
-      {/* large, faint brand mark watermark */}
-      <Image
-        src="/brand/bezacore-mark.png"
-        alt=""
+    <footer className="relative mt-auto overflow-hidden border-t border-paper/10">
+      {/* cobalt gradient seam */}
+      <div
         aria-hidden="true"
-        width={512}
-        height={512}
-        className="pointer-events-none absolute -right-16 -bottom-12 h-auto w-96 opacity-[0.05]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-cobalt/60 to-transparent"
+      />
+      {/* ambient brand glows (cool top-right, warm bottom-left) */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(42% 85% at 90% 0%, color-mix(in oklab, var(--color-cobalt) 11%, transparent), transparent 55%), radial-gradient(46% 95% at 3% 100%, color-mix(in oklab, var(--color-fire) 10%, transparent), transparent 55%)",
+        }}
       />
 
-      <Container className="relative z-10 grid gap-12 py-16 lg:grid-cols-[1.5fr_1fr_1fr]">
-        {/* brand block — the logo, integrated as the footer's lead */}
-        <div className="flex flex-col gap-5">
-          <Image
-            src="/brand/bezacore-lockup-stacked.png"
-            alt="BezaCore Labs"
-            width={380}
-            height={169}
-            className="h-auto w-52 [filter:drop-shadow(0_0_36px_rgba(96,165,250,0.28))]"
-          />
-          <p className="hero-headline-gradient max-w-xs text-xl font-semibold tracking-tight">
-            Software, AI, and the infrastructure to run it.
+      <Container className="relative z-10 grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
+        {/* Brand */}
+        <div className="flex flex-col gap-4">
+          <Link href="/" aria-label="BezaCore Labs — home" className="w-fit">
+            <Image
+              src="/brand/bezacore-lockup.png"
+              alt="BezaCore Labs"
+              width={200}
+              height={46}
+              className="h-9 w-auto"
+            />
+          </Link>
+          <p className="max-w-xs text-sm leading-relaxed text-paper/55">
+            A <span className="text-gradient font-semibold">DevOps &amp; AI studio</span> that builds and
+            runs cloud-native software — apps, AI and AI agents, and the infrastructure behind them.
           </p>
-          <p className="text-sm text-paper/45">Petoskey, Michigan · Est. 2025</p>
+          <p className="font-mono text-xs text-paper/35">Petoskey, Michigan · Est. 2025</p>
         </div>
 
+        {/* Studio */}
         <div className="flex flex-col gap-3">
-          <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-paper/40">Site</p>
+          <p className={headClass}>Studio</p>
           {navLinks.map(({ href, label }) => (
             <Link key={href} href={href} className={linkClass}>
               {label}
@@ -50,33 +56,50 @@ export function Footer() {
           ))}
         </div>
 
+        {/* More */}
         <div className="flex flex-col gap-3">
-          <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-paper/40">More</p>
+          <p className={headClass}>More</p>
           <Link href="/terms" className={linkClass}>
             Terms
           </Link>
           <Link href="/privacy" className={linkClass}>
             Privacy
           </Link>
-          {/* GitHub link removed 2026-06-27 — the BezaCore-Labs org has no
-              public repos yet (a barren link is worse than none). Re-add when
-              there's something public. See content/v2-studio.md. */}
+        </div>
+
+        {/* Connect */}
+        <div className="flex flex-col gap-3">
+          <p className={headClass}>Connect</p>
+          <a
+            href="https://linkedin.com/in/joseph-soper-dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={linkClass}
+          >
+            LinkedIn
+          </a>
+          <Link href="/contact" className="text-sm text-azure transition-colors hover:text-paper">
+            Start a project
+          </Link>
         </div>
       </Container>
 
-      <div className="relative z-10 border-t border-paper/5">
+      {/* Bottom bar */}
+      <div className="relative z-10 border-t border-paper/10">
         <Container className="flex flex-col gap-2 py-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-paper/40">© 2026 BezaCore Labs LLC. All rights reserved.</p>
-          {/* Stripe Climate — 0.5% of revenue to carbon removal (opted in
-              2026-06-28). A quiet values signal; fits the softened-values
-              positioning. */}
           <a
             href="https://climate.stripe.com/A7UnvM"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-paper/40 transition-colors hover:text-paper"
+            className="inline-flex items-center gap-2 text-xs text-paper/40 transition-colors hover:text-paper"
           >
-            We contribute 0.5% of revenue to carbon removal via Stripe Climate
+            <span
+              aria-hidden="true"
+              className="h-1.5 w-1.5 rounded-full"
+              style={{ background: "#34d399", boxShadow: "0 0 8px #34d399" }}
+            />
+            0.5% of revenue to carbon removal via Stripe Climate
           </a>
         </Container>
       </div>

@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import createMDX from "@next/mdx";
 
 const nextConfig: NextConfig = {
   // Emit a self-contained production server at .next/standalone — a minimal
@@ -8,6 +9,10 @@ const nextConfig: NextConfig = {
   // Required for the Cloud Run container build (ADR 0007 — server target,
   // amended 2026-05-25 from the original static-export plan).
   output: "standalone",
+
+  // Let .md/.mdx be first-class alongside ts/tsx — blog posts compile via
+  // @next/mdx (v3 redesign, 2026-07). Posts live in src/content/blog/*.mdx.
+  pageExtensions: ["ts", "tsx", "md", "mdx"],
 
   // The Intelligrace product surface is hidden during the studio repositioning
   // (operating-model v3.5, 2026-06-17). The page content is preserved in the
@@ -21,8 +26,18 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: true,
       },
+      // /work folded into the homepage "What we've built" strip during the v3
+      // redesign (2026-07). Dedicated case-studies page returns when there's
+      // real client work to show.
+      {
+        source: "/work",
+        destination: "/",
+        permanent: false,
+      },
     ];
   },
 };
 
-export default nextConfig;
+const withMDX = createMDX({});
+
+export default withMDX(nextConfig);

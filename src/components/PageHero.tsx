@@ -1,33 +1,37 @@
 import { type ReactNode } from "react";
 import { Container } from "./Container";
-import { Kicker } from "./Kicker";
-import { HeroCircuitFusion } from "./HeroCircuitFusion";
+import { FlowField } from "./FlowField";
 
-// Interior-page hero — the SAME treatment as the homepage hero (circuit traces
-// + traveling pulses + soft glow + film grain + flowing gradient headline), so
-// every page reads as the same site. Restrained scale (no oversized type).
+// Interior-page hero (v3 redesign) — the same generative flow-field atmosphere
+// as the homepage, dialed lower, so every route reads as one site. `title` is a
+// ReactNode so pages can gradient a phrase with <span className="text-gradient">.
+// Reduced-motion users get FlowField's static frame; content is never hidden.
 export function PageHero({
   kicker,
   title,
   children,
 }: {
   kicker?: string;
-  title: string;
+  title: ReactNode;
   children?: ReactNode;
 }) {
   return (
-    <section className="grain relative overflow-hidden border-b border-paper/10">
-      <div className="hero-circuit-glow" aria-hidden="true" />
-      <HeroCircuitFusion />
-      <Container className="relative z-10 py-24 sm:py-28">
-        {kicker ? <Kicker>{kicker}</Kicker> : null}
+    <section className="relative overflow-hidden border-b border-paper/10">
+      <FlowField count={45} />
+      <div aria-hidden="true" className="bz-field-veil" />
+      <Container className="relative z-10 py-20 sm:py-24">
+        {kicker ? (
+          <span className="font-mono text-xs uppercase tracking-[0.24em] text-amber">
+            {kicker}
+          </span>
+        ) : null}
         <h1
-          className={`${kicker ? "mt-4 " : ""}hero-headline-gradient max-w-3xl [overflow-wrap:anywhere] text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl`}
+          className={`${kicker ? "mt-4 " : ""}max-w-3xl text-4xl font-bold leading-[1.05] tracking-tight text-paper [overflow-wrap:anywhere] sm:text-5xl`}
         >
           {title}
         </h1>
         {children ? (
-          <div className="mt-6 max-w-2xl text-lg leading-relaxed text-paper/70">{children}</div>
+          <div className="mt-5 max-w-2xl text-lg leading-relaxed text-paper/70">{children}</div>
         ) : null}
       </Container>
     </section>
